@@ -24,11 +24,18 @@ ul {
 li {
   padding: 0;
   list-style: none;
-  color: #8b8482;
+  color: #645855;
   text-transform: capitalize;
 }
 a {
   text-decoration: none;
+}
+a.active {
+  color: #645855;
+}
+a.active:hover {
+  cursor: default;
+  color: #645855;
 }
 .weather-temperature img {
   margin-right: 5px;
