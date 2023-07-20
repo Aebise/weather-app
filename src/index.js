@@ -1,3 +1,11 @@
+function handleSubmit(event) {
+  event.preventDefault();
+  let cityInput = document.querySelector("#city-input");
+  let val = cityInput.value;
+  console.log(val);
+  search(val);
+}
+
 function formatDate(timestamp) {
   let date = new Date(timestamp);
   let hour = date.getHours();
@@ -23,6 +31,7 @@ function formatDate(timestamp) {
 
   return `${day} ${hour}:${minute}`;
 }
+
 function showTemprature(response) {
   console.log(response.data.weather[0].icon);
   let temp = Math.round(response.data.main.temp);
@@ -54,8 +63,12 @@ function showTemprature(response) {
   iconElement.setAttribute("alt", response.data.weather[0].description);
 }
 
-let city = "Tokyo";
-let apiKey = "bb0df6985c2eab6a171d64a6bacbb4e1";
-let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+function search(city) {
+  let apiKey = "bb0df6985c2eab6a171d64a6bacbb4e1";
+  let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
-axios.get(url).then(showTemprature);
+  axios.get(url).then(showTemprature);
+}
+search("New York");
+let formElement = document.querySelector("#search-form");
+formElement.addEventListener("submit", handleSubmit);
