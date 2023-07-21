@@ -87,6 +87,29 @@ function showCelsiusTemp(event) {
   tempElement.innerHTML = Math.round(celsiusTemp);
 }
 
+function displayForecast() {
+  let forecastElement = document.querySelector("#forecast");
+  let forecastHTML = `<div class="row">`;
+
+  let days = ["Sat", "Sun", "Mon", "Tue"];
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `<div class="col-2">
+        <div class="weather-forcast-date">${day}</div>
+
+          <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="" width="42" />
+          <div class="weather-forecast-temp">
+            <span class="weather-forecast-max"> 18° </span>
+            <span class="weather-forecast-min"> 12° </span>
+          </div>
+        </div>`;
+  });
+
+  forecastHTML = forecastHTML + "</div>";
+  forecastElement.innerHTML = forecastHTML;
+}
+
 let celsiusTemp = null;
 let formElement = document.querySelector("#search-form");
 formElement.addEventListener("submit", handleSubmit);
@@ -97,3 +120,4 @@ fahrenheitLink.addEventListener("click", showFahrenheitTemp);
 let celsiusLink = document.querySelector("#celsius-temp");
 celsiusLink.addEventListener("click", showCelsiusTemp);
 search("New York");
+displayForecast();
