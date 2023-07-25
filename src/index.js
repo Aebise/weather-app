@@ -112,30 +112,8 @@ function search(city) {
   axios.get(url).then(showTemprature);
 }
 
-function showFahrenheitTemp(event) {
-  event.preventDefault();
-  celsiusLink.classList.remove("active");
-  fahrenheitLink.classList.add("active");
-  let fahrenheitTemp = Math.round((celsiusTemp * 9) / 5 + 32);
-  let tempElement = document.querySelector("#temprature");
-  tempElement.innerHTML = fahrenheitTemp;
-}
-
-function showCelsiusTemp(event) {
-  event.preventDefault();
-  fahrenheitLink.classList.remove("active");
-  celsiusLink.classList.add("active");
-  let tempElement = document.querySelector("#temprature");
-  tempElement.innerHTML = Math.round(celsiusTemp);
-}
-
 let celsiusTemp = null;
 let formElement = document.querySelector("#search-form");
 formElement.addEventListener("submit", handleSubmit);
 
-let fahrenheitLink = document.querySelector("#fahrenheit-link");
-fahrenheitLink.addEventListener("click", showFahrenheitTemp);
-
-let celsiusLink = document.querySelector("#celsius-temp");
-celsiusLink.addEventListener("click", showCelsiusTemp);
 search("New York");
