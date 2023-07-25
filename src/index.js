@@ -30,11 +30,40 @@ function formatDate(timestamp) {
 
   return `${day} ${hour}:${minute}`;
 }
-function showForecast(response) {
-  console.log(response.data.daily);
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  day = days[day];
+  return day;
 }
+function showForecast(response) {
+  let forecastElement = document.querySelector("#forecast");
+  let forecastHTML = `<div class="row">`;
+
+  let forecast = response.data.daily;
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 6) {
+      let max = Math.round(forecastDay.temperature.maximum);
+      let min = Math.round(forecastDay.temperature.minimum);
+      forecastHTML =
+        forecastHTML +
+        `<div class="col-2">
+        <div class="weather-forcast-date">${formatDay(forecastDay.time)}</div>
+          <img src=${forecastDay.condition.icon_url} alt="" width="42" />
+          <div class="weather-forecast-temp">
+            <span class="weather-forecast-max"> ${max}° </span>
+            <span class="weather-forecast-min"> ${min}° </span>
+          </div>
+        </div>`;
+    }
+  });
+
+  forecastHTML = forecastHTML + "</div>";
+  forecastElement.innerHTML = forecastHTML;
+}
+
 function getForecast(coordinates) {
-  console.log(coordinates);
   lon = coordinates.lon;
   lat = coordinates.lat;
 
@@ -100,29 +129,6 @@ function showCelsiusTemp(event) {
   tempElement.innerHTML = Math.round(celsiusTemp);
 }
 
-function displayForecast() {
-  let forecastElement = document.querySelector("#forecast");
-  let forecastHTML = `<div class="row">`;
-
-  let days = ["Sat", "Sun", "Mon", "Tue"];
-  days.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      `<div class="col-2">
-        <div class="weather-forcast-date">${day}</div>
-
-          <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="" width="42" />
-          <div class="weather-forecast-temp">
-            <span class="weather-forecast-max"> 18° </span>
-            <span class="weather-forecast-min"> 12° </span>
-          </div>
-        </div>`;
-  });
-
-  forecastHTML = forecastHTML + "</div>";
-  forecastElement.innerHTML = forecastHTML;
-}
-
 let celsiusTemp = null;
 let formElement = document.querySelector("#search-form");
 formElement.addEventListener("submit", handleSubmit);
@@ -133,4 +139,3 @@ fahrenheitLink.addEventListener("click", showFahrenheitTemp);
 let celsiusLink = document.querySelector("#celsius-temp");
 celsiusLink.addEventListener("click", showCelsiusTemp);
 search("New York");
-displayForecast();
